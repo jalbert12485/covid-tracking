@@ -19,7 +19,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: dateLabel,
         datasets: [{
-            label: '# of Votes',
+            label: '# of Cases',
             data: population,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -131,18 +131,18 @@ const exampleData={
 
 function Data(dat){
 
-    this.city={ name: "City", data: dat.city};
-    this.county={ name: "County", data: dat.county};
+    // this.city={ name: "City", data: dat.city};
+    // this.county={ name: "County", data: dat.county};
     this.state={ name: "State", data: dat.state};
     this.date={ name: "Date", data: dat.date};
-    this.pop={ name: "Population", data: Number(dat.pop)};
+    // this.pop={ name: "Population", data: Number(dat.pop)};
     this.totalCount={ name: "Total Cases", data: Number(dat.totalCount)};
-    this.countPerPop={ name: "Total Cases Per Capita", data: (this.totalCount.data/this.pop.data).toFixed(4)};
+    // this.countPerPop={ name: "Total Cases Per Capita", data: (this.totalCount.data/this.pop.data).toFixed(4)};
     this.death={ name: "Deaths", data: Number(dat.death)};
-    this.deathPerPop={ name: "Deaths Per Capita", data: (this.death.data/this.pop.data).toFixed(4) };
-    this.currentCount={ name: "Current Cases", data: Number(dat.currentCount)};
-    this.curCountPerPop={ name: "Current Cases Per Capita", data: (this.currentCount.data/this.pop.data).toFixed(4)};
-    this.recovered={ name: "Recovered", data: this.totalCount.data-this.currentCount.data-this.death.data};
+    // this.deathPerPop={ name: "Deaths Per Capita", data: (this.death.data/this.pop.data).toFixed(4) };
+    // this.currentCount={ name: "Current Cases", data: Number(dat.currentCount)};
+    // this.curCountPerPop={ name: "Current Cases Per Capita", data: (this.currentCount.data/this.pop.data).toFixed(4)};
+    // this.recovered={ name: "Recovered", data: this.totalCount.data-this.currentCount.data-this.death.data};
 } 
 
 let allData=[];
@@ -153,25 +153,109 @@ for(let i=0; i < 8; i++){
 }
 
 function displayData(){
-
-    for(const value in allData[0]){
+    $("#stats").empty();
+    for(const value in allData[allData.length-1]){
         const newPara=$("<p>");
-        newPara.html(`<strong>${allData[0][value].name}:</strong> ${allData[0][value].data}`);
+        newPara.html(`<strong>${allData[allData.length-1][value].name}:</strong> ${allData[allData.length-1][value].data}`);
         $("#stats").append(newPara);
     }
 
 
 }
  
-displayData();
+// displayData();
 
 let population=[];
 
 let dateLabel=[];
 
-for(let i=0; i<8; i++){
-    population.push(allData[i].pop.data);
-    dateLabel.push(allData[i].date.data);
+
+
+
+let COVIDDataSet=[];
+const datapoints=8;
+let period="month"; // We could let the user set this if we wanted to
+
+function getData(event){
+    COVIDDataSet=[];
+    let state=currentCity;
+    if(!state) throw "Error, user did not submit a state";
+
+    let dates=[];
+    let dateInSeries=moment().subtract(1,"day");
+    for(let i=0;i<datapoints;i++){
+        dates.push(dateInSeries.format("YYYYMMDD"));
+        dateInSeries=moment(dateInSeries).subtract(1,period);
+    }
+    let url="https://api.covidtracking.com/v1/states/";
+    let cors="https://cors-anywhere.herokuapp.com/";
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url":"",
+        "method": "GET",
+        "headers": {
+        }
+    }    
+    for(let i=0;i<datapoints;i++){
+        url="https://api.covidtracking.com/v1/states/"+"IL"+"/"+dates[i]+".json";
+        settings.url=url;
+        $.ajax(settings).done(response=>collateCovidData(response));
+    }
+
 }
 
-makeNewChart();
+let _rep;
+function collateCovidData(response){
+
+    _rep=response;
+    date=response.date.toString();
+    date=moment(date).format("LL");
+
+    let newData={
+ 
+        // city: "Chicago",
+        // county:  "Cook",
+        state: response.state,
+        date: date, 
+        // pop: 5150000,
+        totalCount:  response.positive,
+//         countPerPop:  0,
+        death: response.death,
+        // deathPerPop:  0,
+        // currentCount:  0,
+        // curCountPerPop:  0
+    
+    }
+    COVIDDataSet.push(newData);
+    sortData();
+    storeData();
+
+}
+
+function sortData(){
+    console.log("Sort Data")
+    COVIDDataSet=COVIDDataSet.sort(function(a,b){
+        if(moment(a.date).format("X")>moment(b.date).format("X")) return 1;
+        else return -1;
+    });
+
+}
+
+function storeData(){
+    console.log(COVIDDataSet);
+    allData=[];
+    population=[];
+    dateLabel=[];
+    for(let i=0; i< COVIDDataSet.length; i++){
+    const newConstData=new Data(COVIDDataSet[i]);
+    allData.push(newConstData);
+    population.push(COVIDDataSet[i].totalCount);
+    dateLabel.push(COVIDDataSet[i].date);}
+    displayData();
+    makeNewChart();
+
+}
+
+getData();
