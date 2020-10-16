@@ -48,9 +48,10 @@ function init(){
     displayCities();
 
     $("#city-submit").on("click",function(e){
-        e.preventDefault;
+        e.preventDefault();
         addCity();
         displayCities();
+        getData();
     });
     $("body").on("click",".close",function(){
         removeCity(this.dataset.city);
@@ -61,7 +62,7 @@ function init(){
         getWeatherInfo();
     });
 
-
+    $("#city-submit-form").on("submit",getData);
 
 }
 
