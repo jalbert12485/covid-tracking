@@ -9,3 +9,13 @@ ul{
 .white-text{
     color: white;
 }
+
+.COVID-modal{
+    position: relative;
+    top: -250px;
+    left: 25%;
+    border: 1px solid black;
+    width: fit-content;
+    padding: 10px;
+    background-color: darkgray;
+}
