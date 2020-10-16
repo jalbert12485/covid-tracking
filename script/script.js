@@ -199,7 +199,7 @@ function getData(event){
         }
     }    
     for(let i=0;i<datapoints;i++){
-        url="https://api.covidtracking.com/v1/states/"+"IL"+"/"+dates[i]+".json";
+        url="https://api.covidtracking.com/v1/states/"+state+"/"+dates[i]+".json";
         settings.url=url;
         $.ajax(settings).done(response=>collateCovidData(response));
     }
