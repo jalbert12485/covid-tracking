@@ -1,36 +1,60 @@
+let COVIDDataSet=[];
+const datapoints=3;
+let period="month"; // We could let the user set this if we wanted to
+
 function getData(event){
-    // let zip="60626";
-    // let daysInPast=6;
-    // let url="	https://localcoviddata.com/covid19/v1/cases/newYorkTimes?daysInPast="+daysInPast+"&zipCode="+zip;
-    let date="20201007";
-    let state="IL";
-    let url="https://api.covidtracking.com/v1/states/"+state+"/"+date+".json";
+    let state=$("#city-input").val();
+    if(!state) throw "Error, user did not submit a state";
+
+    let dates=[];
+    let dateInSeries=moment().subtract(1,"day");
+    for(let i=0;i<datapoints;i++){
+        dates.push(dateInSeries.format("YYYYMMDD"));
+        dateInSeries=moment(dateInSeries).subtract(1,period);
+    }
+    let url="https://api.covidtracking.com/v1/states/";
     let cors="https://cors-anywhere.herokuapp.com/";
 
     var settings = {
         "async": true,
         "crossDomain": true,
-       // "url": "api.votesmart.org/Candidates.getByZip?o=JSON&zip5="+zip+"&key="+APIKey,
         "url":cors+url,
         "method": "GET",
         "headers": {
         }
     }    
-    $.ajax(settings).done(response=>displayCovidData(response));
+    for(let i=0;i<datapoints;i++){
+        url="https://api.covidtracking.com/v1/states/"+state+"/"+dates[i]+".json";
+        settings.url=cors+url;
+        $.ajax(settings).done(response=>collateCovidData(response));
+    }
+
 }
 
 let _rep;
-function displayCovidData(response){
+function collateCovidData(response){
     _rep=response;
-    console.log(response);
-    let {date, state, deathConfirmed:dead}=response;
-    // fix up date format
-    // put the year in the read (c.f. https://stackoverflow.com/questions/10841868/move-n-characters-from-front-of-string-to-the-end)
-    // date=date.toString().substr(4)+date.toString().substr(0,4);
+    let {date, state, death:dead}=response;
     date=date.toString();
-    date=date.slice(4,6)+"-"+date.slice(6,8)+"-"+date.slice(0,4);
-    console.log(date);
-    date=moment(date).format("LL")
+   // date=moment(date).format("LL");
+
+    COVIDDataSet.push({"date":date, "dead":dead, "formattedDate":moment(date).format("LL")});
+    if(COVIDDataSet.length===(datapoints)) shipCovidData();
+}
+
+function shipCovidData(){
+    COVIDDataSet=COVIDDataSet.sort(function(a,b){
+        console.log(a.date);
+        if(moment(a.date).format("X")>moment(b.date).format("X")) return 1;
+        else return -1;
+    });
+    console.log(COVIDDataSet);
+}
+
+
+
+
+function displayCovidData(){
     var COVIDBox=$("<div>").addClass("COVID-box");
     var bodyText=`<p>On ${date},</p><p> ${dead} people were </p><p>confirmed to have died of COVID.</p>`;
     var modalHTML=`<div class="COVID-modal"><div class="COVID-modal-header"><span class="COVID-modal-exit">X</span><div class="COVID-modal-body">${bodyText}</div></div></div>`;
