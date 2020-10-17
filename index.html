@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Reset css  -->
+    <link rel="stylesheet" href="./css/reset.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Reset css  -->
-    
-    <link rel="stylesheet" href="./css/reset.css">
     <!-- My css -->
     <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -45,13 +44,11 @@
         </aside>
 
         <!-- Display portion -->
-        <main class="col-md-8 col-sm-12 bg-white">
+        <main class="col-md-8 col-sm-12 bg-white" id="main-display">
             <!-- Current Info -->
             <section class="row border m-1">
-                <div class="col-md-4 col-sm-12">
-                <ul><h1 id="current-city"> Current City </h1>
-                <li><h3 id="something">  </h3>Stat: </li>
-                </ul>
+                <div class="col-md-4 col-sm-12" id="stats">
+
                 </div>
                 <canvas class="col-md-8 col-sm-12" id="myChart" width="400" height="200"></canvas>
             </section>
@@ -78,8 +75,9 @@
     <script src="./script/moment.js"></script>
     <!-- My Script -->
     
-    <script src="./script/covidAPI.js"></script>
+
     <script src="./script/script.js"></script>
+    <!-- <script src="./script/covidAPI.js"></script> -->
 </body>
 
 </html>
