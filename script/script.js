@@ -1,18 +1,27 @@
-// Global variables
+// Global variables-Some of these can be changed to better names.
+// Note that by cities, we are actually saying state.  It was originally meant to be able to search by city, but the api did not take the cities for search purposes.
 let cities=[];
 let allData=[];
+// By population, we mean the set of data which should be displayed as the dependent variable in the chart.
 let population=[];
+// This is the information that will be displayed as the independent variable of the chart.
 let dateLabel=[];
+// Data collected from API, will be converted before being displayed.
 let COVIDDataSet=[];
+let currentCity;
 // How many dates for we want to check?
 const datapoints=8;
 // How frequently do we want to check? Could be "month", "week", or "day"
 let period="month"; // We could let the user set this if we wanted to
 
-// If the user has been here before, then we've saved their search in 
-// their local storage as "cities"
+// If the user has been here before, then we've saved their search in their local storage as "cities".  If not, we create an empty array to initialize their local storage.
 cities=JSON.parse(localStorage.getItem("cities"));
-if(cities) var currentCity=cities[cities.length-1];
+if(!(cities == null || cities==[])  ){
+    currentCity=cities[cities.length-1];
+}else{
+    cities=[];
+    saveToLocal();
+}
 let currentDate=moment().format('L'); 
 
 // Once the main html has loaded, we can run the rest of our scripts
@@ -24,70 +33,78 @@ $("document").ready(init);
 // ||        init()                      ||
 // ||****++++----....____....----++++****||
 function init(){
-    // If we have any previously saved data, we should put it in the search history
-    // below the submit button
-    if(cities) displayCities();
-
-    // When the user clicks in the #city-submit button or hits enter, or really
-    // just submits the form data in any way, don't reload the page
-    // but do add the city to our localStorage list, re-display our search
-    // history, and then send our API request off via getData()
-    $("#city-submit-form").on("submit",function(e){
-        e.preventDefault();
-        addCity();
+    // If we have any previously saved data, we should search the last saved state and display the information.
+    if(currentCity){
         displayCities();
         getData();
-    });
-    // Clicking on any of the .close classes will remove a city from the search history
-    $("body").on("click",".close",function(){
-        removeCity(this.dataset.city);
-    });
-    // Clicking on a city in our search history will send an API call.
-    $("body").on("click",".city",function(e){
-        e.preventDefault;
-        currentCity=cities[this.dataset.city];
-        getData();
-    });
-
-    // Is this necessary? I don't understand what it does?
-    for(let i=0; i < 8; i++){
-        let stats=new Data(exampleData);
-        allData.push(stats);
-    } 
-    getData();
+    }
 }
 
+
+
+// When input form submitted (including pressing enter on input line), refresh page is prevented and the city is added to the local storage.  Then, then searched for city is displayed.
+$("#city-submit").on("click",function(e){
+    e.preventDefault();
+    addCity();
+});
+// When the x is pressed on the displayed save data, this state will be removed from local storage.
+$("body").on("click",".close",function(){
+    removeCity(this.dataset.city);
+});
+// When a saved state is clicked, this will display the information for that state.
+$("body").on("click",".city",function(e){
+    e.preventDefault();
+    currentCity=cities[this.dataset.city];
+    getData();
+});    
+
+// Updates the local storage to be the current states.
 function saveToLocal(){
-    console.log("Save to local: "+cities);
     localStorage.setItem("cities",JSON.stringify(cities));
 }
 
+// Retrieves the local storage and puts into the current storage.
 function getLocal(){
     cities=JSON.parse(localStorage.getItem("cities"));
 }
 
-
+// First check to make sure the input is non-empty and not a repeat.  If this is the case, will create a new local storage point.
 function addCity(){
-    var cityInput=$("#city-input").val().trim();
-    if((cityInput != null) && (cityInput != "")){
-        if(!cities) cities=[];
+    let cityInput=$("#city-input").val().trim();
+    let shouldSave=true;
+    for(let i=0; i<cities.length; i++){
+        if(cityInput==cities[i]){
+            shouldSave=false;
+        }
+    }
+    if((cityInput == null) || (cityInput == "")){
+        shouldSave=false;
+    }
+    if(shouldSave){
         cities.push(cityInput);
         currentCity=cityInput;
         saveToLocal();
         displayCities();
+        getData();
+    }else{
+        $("#city-input").text("Enter a new valid state code")
     }
 }
 
+// Removes a state from the local storage.
 function removeCity(cityNumber){
     cities.splice(cityNumber,1);
     saveToLocal();
     displayCities();
 }
+
+//Creates the display for the current date and state's data. (Does not include computer coded date).
 function displayData(){
     $("#stats").empty();
     for(const value in allData[allData.length-1]){
+        if(value != "date"){
         const newPara=$("<p>");
         newPara.html(`<strong>${allData[allData.length-1][value].name}:</strong> ${allData[allData.length-1][value].data}`);
-        $("#stats").append(newPara);
+        $("#stats").append(newPara);}
     }
 }

@@ -1,17 +1,5 @@
-const exampleData={ 
-    city: "Chicago",
-    county:  "Cook",
-    state: "Illinois",
-    date: "December 16", 
-    pop: 5150000,
-    totalCount:  336000,
-    countPerPop:  0,
-    death: 9300,
-    deathPerPop:  0,
-    currentCount:  100000,
-    curCountPerPop:  0
-}
 
+// We get the current state from the screen, then get the data for that state on yesterday's date and the prior 7 months (8 points total).  This is then saved and displayed on the screen.
 function getData(event){
     COVIDDataSet=[];
     let state=currentCity;
@@ -41,11 +29,14 @@ function getData(event){
     }
 
 }
+
+// Formats the data into a form which can be accepted into the data constructor.
 function collateCovidData(response){
     _rep=response;
     date=response.date.toString();
     humanDateFormat=moment(date).format("LL");
 
+    // Note that the commented portions are left in for future use if we can get the information.  If not we can delete these.
     let newData={ 
         // city: "Chicago",
         // county:  "Cook",
@@ -61,10 +52,14 @@ function collateCovidData(response){
         // curCountPerPop:  0    
     }
     COVIDDataSet.push(newData);
+    // When the loop is finished, will sort, store and display data.
+    if(COVIDDataSet.length==datapoints){
     sortData();
     storeData();
+    }
 }
 
+// Puts the response data in chronological order.
 function sortData(){
     COVIDDataSet=COVIDDataSet.sort(function(a,b){
         // Ideally this date info should be stored in ISO format
@@ -73,6 +68,7 @@ function sortData(){
     });
 }
 
+// Takes the reponse data and formats in such a way that it can be displayed on the screen and read by the user.
 function storeData(){
     console.log(COVIDDataSet);
     allData=[];

@@ -32,7 +32,7 @@ function makeNewChart(){
     }
 
 
-
+// Displays the user's locally stored states for easy recall.
     function displayCities(){
         $("#city-container").empty();
     
