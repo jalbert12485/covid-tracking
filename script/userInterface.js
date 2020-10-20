@@ -1,7 +1,12 @@
 // Make a new chart
 function makeNewChart(){
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    $("#chartArea").empty();
+    let newCanvas=$("<canvas>");
+    newCanvas.attr("id","myChart");
+    newCanvas.attr("style","width: 400 height:200");    
+
+    // let ctx = document.getElementById('myChart').getContext('2d');
+    let myChart = new Chart(newCanvas, {
         type: 'line',
         data: {
             labels: dateLabel,
@@ -41,6 +46,7 @@ function makeNewChart(){
             }
         }
     });
+        $("#chartArea").append(newCanvas);
     }
 
 

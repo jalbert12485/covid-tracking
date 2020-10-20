@@ -100,12 +100,46 @@ function removeCity(cityNumber){
 }
 
 //Creates the display for the current date and state's data. (Does not include computer coded date).
-function displayData(){
+function displayData(displayDate=0){
+    let displayIndex=allData.length-1-displayDate;
     $("#stats").empty();
-    for(const value in allData[allData.length-1]){
+    for(const value in allData[displayIndex]){
         if(value != "date"){
         const newPara=$("<p>");
-        newPara.html(`<strong>${allData[allData.length-1][value].name}:</strong> ${allData[allData.length-1][value].data}`);
+        newPara.html(`<strong>${allData[displayIndex][value].name}:</strong> ${allData[displayIndex][value].data}`);
         $("#stats").append(newPara);}
     }
+    // Creates a form that the user can use to change the date for the displayed data.
+    let newForm=$("<form>");
+    let newDiv=$("<div>");
+    let newLabel=$("<label>");
+    newLabel.attr("for","change-date-form");
+    newLabel.text("Select date");
+    let newSelect=$("<select>");
+    newSelect.addClass("form-control");
+    newSelect.attr("id","change-date-form");
+    let newOption=$("<option>");
+    newOption.text("Choose a date");
+    newOption.attr("value",0);    
+    newSelect.append(newOption);
+    newOption=$("<option>");
+    newOption.text("Current Date");
+    newOption.attr("value",0);
+    newSelect.append(newOption);
+    for(let i=1; i<8; i++){
+        newOption=$("<option>");
+        newOption.text(`${i} months ago.`);
+        newOption.attr("value",i);
+        newSelect.append(newOption);
+    }
+    newSelect.on("change",function(e){
+        e.preventDefault();
+        displayData(this.value);
+     })
+    newLabel.append(newSelect);
+    newDiv.append(newLabel);
+    newForm.append(newDiv);
+    $("#stats").append(newForm);
 }
+
+
