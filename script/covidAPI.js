@@ -72,12 +72,14 @@ function sortData(){
 function storeData(){
     console.log(COVIDDataSet);
     allData=[];
-    population=[];
+    cases=[];
+    deathCount=[];
     dateLabel=[];
     for(let i=0; i< COVIDDataSet.length; i++){
     const newConstData=new Data(COVIDDataSet[i]);
     allData.push(newConstData);
-    population.push(COVIDDataSet[i].totalCount);
+    cases.push(Number(COVIDDataSet[i].totalCount)/100);
+    deathCount.push(COVIDDataSet[i].death);
     dateLabel.push(COVIDDataSet[i].humanDateFormat);}
     displayData();
     makeNewChart();

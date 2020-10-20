@@ -3,7 +3,8 @@
 let cities=[];
 let allData=[];
 // By population, we mean the set of data which should be displayed as the dependent variable in the chart.
-let population=[];
+let cases=[];
+let deathCount=[];
 // This is the information that will be displayed as the independent variable of the chart.
 let dateLabel=[];
 // Data collected from API, will be converted before being displayed.
