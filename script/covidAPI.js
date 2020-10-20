@@ -68,16 +68,26 @@ function sortData(){
     });
 }
 
-// Takes the reponse data and formats in such a way that it can be displayed on the screen and read by the user.
+// Takes the reponse data and formats in such a way that it can be displayed on the screen and read by the user.  Added a case where the api returns null to give a result of 0 instead.
 function storeData(){
     console.log(COVIDDataSet);
     allData=[];
-    population=[];
+    cases=[];
+    deathCount=[];
     dateLabel=[];
     for(let i=0; i< COVIDDataSet.length; i++){
     const newConstData=new Data(COVIDDataSet[i]);
     allData.push(newConstData);
-    population.push(COVIDDataSet[i].totalCount);
+    if(!COVIDDataSet[i].totalCount){
+        cases.push(0);
+    }else{
+    cases.push(Number(COVIDDataSet[i].totalCount)/100);
+    }
+    if(!COVIDDataSet[i].death){
+        deathCount.push(0); 
+    }else{
+    deathCount.push(COVIDDataSet[i].death);
+    }
     dateLabel.push(COVIDDataSet[i].humanDateFormat);}
     displayData();
     makeNewChart();
