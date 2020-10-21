@@ -37,7 +37,7 @@ function collateCovidData(response){
     // Note that the commented portions are left in for future use if we can get the information.  If not we can delete these
     let newData= new FormatData(currentCity,humanDateFormat,response.date,response.positive,response.death);
     COVIDDataSet.push(newData);
-    console.log(newData);
+    
     // When the loop is finished, will sort, store and display data.
     if(COVIDDataSet.length==datapoints){
     sortData();
@@ -47,7 +47,6 @@ function collateCovidData(response){
 
 // Puts the response data in chronological order.
 function sortData(){
-    console.log("sort");
     COVIDDataSet=COVIDDataSet.sort(function(a,b){
         // Ideally this date info should be stored in ISO format
         if(a.date>b.date) return 1;
