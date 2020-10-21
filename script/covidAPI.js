@@ -1,4 +1,3 @@
-
 // We get the current state from the screen, then get the data for that state on yesterday's date and the prior 7 months (8 points total).  This is then saved and displayed on the screen.
 function getData(event){
     COVIDDataSet=[];
@@ -36,21 +35,8 @@ function collateCovidData(response){
     date=response.date.toString();
     humanDateFormat=moment(date).format("LL");
 
-    // Note that the commented portions are left in for future use if we can get the information.  If not we can delete these.
-    let newData={ 
-        // city: "Chicago",
-        // county:  "Cook",
-        state: response.state,
-        humanDateFormat: humanDateFormat, 
-        date: date,
-        // pop: 5150000,
-        totalCount:  response.positive,
-//         countPerPop:  0,
-        death: response.death,
-        // deathPerPop:  0,
-        // currentCount:  0,
-        // curCountPerPop:  0    
-    }
+    // Note that the commented portions are left in for future use if we can get the information.  If not we can delete these
+    let newData= new FormatData(currentCity,humanDateFormat,response.date,response.positive,response.death);
     COVIDDataSet.push(newData);
     // When the loop is finished, will sort, store and display data.
     if(COVIDDataSet.length==datapoints){
@@ -70,7 +56,7 @@ function sortData(){
 
 // Takes the reponse data and formats in such a way that it can be displayed on the screen and read by the user.  Added a case where the api returns null to give a result of 0 instead.
 function storeData(){
-    console.log(COVIDDataSet);
+    // console.log(COVIDDataSet);
     allData=[];
     cases=[];
     deathCount=[];
