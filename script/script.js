@@ -38,6 +38,7 @@ function init(){
     if(currentCity){
         displayCities();
         getData();
+        // testEAI();
     }
 }
 
