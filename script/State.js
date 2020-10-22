@@ -1,3 +1,4 @@
+// Creates an object for the given state based on user's input.  This amalgamates the state name, abbreviation and population.
 
 class State{
     constructor(state){

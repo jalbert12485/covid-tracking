@@ -73,15 +73,19 @@ function getLocal(){
 function addCity(){
     let cityInput=$("#city-input").val().trim();
     let shouldSave=true;
+    // Checks if the user already saved the data.
     for(let i=0; i<cities.length; i++){
         if(cityInput==cities[i]){
             shouldSave=false;
         }
     }
+    // List of all state abbreviations.
     let stateAbbr=["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];    
+    // Checks user input to make sure it is in the above list.
     if(stateAbbr.indexOf(cityInput) == -1){
         shouldSave=false;
     }
+    // Saves the data if a valid input is given.
     if(shouldSave){
         $("#input-error").attr("style","display: none");
         cities.push(cityInput);
@@ -90,6 +94,7 @@ function addCity(){
         displayCities();
         getData();
     }else{
+        // If the input was not valid, let's the user know.
         $("#input-error").attr("style","display: block");
     }
 }
