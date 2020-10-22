@@ -1,7 +1,4 @@
 
-
-// Make a new chart
-function makeNewChart(){
     function displayLabels(){
         if(window.screen.width < 500){
             return false;
@@ -9,6 +6,21 @@ function makeNewChart(){
             return true;
         }  
     }
+
+    currentLabelDisplay=displayLabels();
+
+    $(window).resize(function(){
+        
+        if(displayLabels() != currentLabelDisplay){
+            currentLabelDisplay=displayLabels();
+            makeNewChart();
+        }
+    });
+
+
+// Make a new chart
+function makeNewChart(){
+
 
     $("#chartArea").empty();
     let newCanvas=$("<canvas>");
