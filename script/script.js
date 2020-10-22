@@ -78,17 +78,19 @@ function addCity(){
             shouldSave=false;
         }
     }
-    if((cityInput == null) || (cityInput == "")){
+    let stateAbbr=["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];    
+    if(stateAbbr.indexOf(cityInput) == -1){
         shouldSave=false;
     }
     if(shouldSave){
+        $("#input-error").attr("style","display: none");
         cities.push(cityInput);
         currentCity=cityInput;
         saveToLocal();
         displayCities();
         getData();
     }else{
-        $("#city-input").text("Enter a new valid state code")
+        $("#input-error").attr("style","display: block");
     }
 }
 
@@ -106,7 +108,7 @@ function displayData(displayDate=0){
     for(const value in allData[displayIndex]){
         if(value != "date"){
         const newPara=$("<p>");
-        newPara.html(`<strong>${allData[displayIndex][value].name}:</strong> ${allData[displayIndex][value].data}`);
+        newPara.html(`<strong>${allData[displayIndex][value].name}:</strong> ${allData[displayIndex][value].data.toLocaleString()}`);
         $("#stats").append(newPara);}
     }
     // Creates a form that the user can use to change the date for the displayed data.

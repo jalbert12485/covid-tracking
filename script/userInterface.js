@@ -1,12 +1,23 @@
+
+
 // Make a new chart
 function makeNewChart(){
+    function displayLabels(){
+        if(window.screen.width < 500){
+            return false;
+        }else{
+            return true;
+        }  
+    }
+
     $("#chartArea").empty();
     let newCanvas=$("<canvas>");
     newCanvas.attr("id","myChart");
-    newCanvas.attr("style","width: 400 height:200");    
+    newCanvas.attr("style","width: 400 height:200");       
 
     // let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(newCanvas, {
+
         type: 'line',
         data: {
             labels: dateLabel,
@@ -37,17 +48,31 @@ function makeNewChart(){
             }]
         },
         options: {
+            legend: {
+                display: displayLabels()
+            },
             scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
                     }
+                }],
+                xAxes: [{
+                    ticks:{
+                        display: displayLabels()
+                    }
+    
                 }]
             }
         }
     });
         $("#chartArea").append(newCanvas);
+        let newPara=$("<p>");
+        newPara.html("<strong>Note:</strong> Chart graphs cases in hundreds so both deaths and cases are easily visible.  That is, a 1% death rate would show both datasets as equal.")
+        $("#chartArea").append(newPara);    
+
     }
+
 
 
 // Displays the user's locally stored states for easy recall.
@@ -57,7 +82,7 @@ function makeNewChart(){
         for(var i=0; i<cities.length; i++){
             var newCity=$("<p>")
             newCity.text(cities[i]);
-            newCity.addClass("border bg-white p-1 m-0 city");
+            newCity.addClass("border bg-white p-1 mr-0 ml-0 mb-2 city");
             newCity.attr("data-city",i);
             var remove=$("<button>");
             remove.addClass("close");
