@@ -106,10 +106,13 @@ function displayData(displayDate=0){
     let displayIndex=allData.length-1-displayDate;
     $("#stats").empty();
     for(const value in allData[displayIndex]){
-        if(value != "date"){
-        const newPara=$("<p>");
-        newPara.html(`<strong>${allData[displayIndex][value].name}:</strong> ${allData[displayIndex][value].data.toLocaleString()}`);
-        $("#stats").append(newPara);}
+        if(value != "date" && value.data){
+            const newPara=$("<p>");
+            console.log(allData);
+            console.log(allData[displayIndex][value]);
+            newPara.html(`<strong>${allData[displayIndex][value].name}:</strong> ${allData[displayIndex][value].data.toLocaleString()}`);
+            $("#stats").append(newPara);
+        }
     }
     // Creates a form that the user can use to change the date for the displayed data.
     let newForm=$("<form>");
