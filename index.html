@@ -17,12 +17,17 @@
 <body>
 
     <!-- Page title bar -->
-    <nav class="navbar navbar-light bg-dark">
-        <span class="h1 mr-auto ml-auto nav-text">Realestate and Covid</span>
+    <nav class="navbar navbar-light">
+        <!-- Image in public domain from https://en.wikipedia.org/wiki/File:SARS-CoV-2_without_background.png -->
+        <img class="mr-2" src="covid.png" width="40" height="40" alt="">
+        <span class="h3 nav-text mr-auto">COVID Tracking</span> 
+        <h4 class="nav-text ml-auto">Keeping a eye on COVID</h4>   
     </nav>
 
+
+
     <!-- Content box -->
-    <div class="container-fluid row bg-light p-0 mr-0 ml-0">
+    <div class="container-fluid row p-2 mr-0 ml-0">
         <!-- Aside with selected cities -->
         <aside class="col-md-4 col-sm-12 pt-4 pl-4 pb-4">
             <!-- Input form -->
@@ -32,6 +37,7 @@
                         <label class="sr-only" for="city-input">Search for State</label>
                         <input type="text" class="form-control" id="city-input" placeholder="Search for State (ex: IL)">
                     </div>
+                    
                     <div class="col-sm-3">
                         <button type="submit" id="city-submit" class="btn btn-primary"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
@@ -40,6 +46,7 @@
                     </div>
                 </div>
             </form>
+            <p id="input-error"> Input only an unsaved state abbreviation.</p>
             <div class="container mt-2" id="city-container"></div>
         </aside>
 
@@ -47,10 +54,10 @@
         <main class="col-md-8 col-sm-12 bg-white" id="main-display">
             <!-- Current Info -->
             <section class="row border m-1">
-                <div class="col-md-4 col-sm-12" id="stats">
+                <div class="col-lg-4 col-md-12" id="stats">
 
                 </div>
-                <div class="col-md-8 col-sm-12" id="chartArea"></div>
+                <div class="col-lg-8 col-md-12" id="chartArea"></div>
             </section>
 
         </main>

@@ -19,3 +19,17 @@ ul{
     padding: 10px;
     background-color: darkgray;
 }
+
+.navbar{
+    background-color: #3D315B;
+}
+
+aside{
+    background-color: rgba(61, 49, 91, .5);
+}
+
+#input-error{
+    display: none;
+    color: white;
+}
+
