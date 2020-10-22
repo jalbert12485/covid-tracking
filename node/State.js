@@ -1,6 +1,8 @@
 const { fstat } = require("fs");
 const fs=require("fs");
 
+// used to get info on the states with name, population and abbreviation, then writes this array to a file.
+
 class State{
     constructor(state){
         let popInfo;
@@ -25,9 +27,8 @@ class State{
                                     stateAbbr=JSON.parse(data);
                                         for(let i=0; i< stateNames.length; i++){
                                         stateInfo.push(new State(stateNames[i]));
-                                        fs.writeFile("stateInfo.txt",JSON.stringify(stateInfo),function(e){if(e) throw e;});
                                         }
-                                        
+                                        fs.writeFile("stateInfo.txt",JSON.stringify(stateInfo),function(e){if(e) throw e;});
                 
                                 }
                             });

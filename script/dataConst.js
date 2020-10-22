@@ -2,9 +2,9 @@ function Data(dat){
     // this.city={ name: "City", data: dat.city};
     // this.county={ name: "County", data: dat.county};
     this.stateName={ name: "State", data: dat.stateName};
-    this.stateAbbr={ name: "State", data: dat.stateAbbr};
+    this.stateAbbr={ name: "Abbreviation", data: dat.stateAbbr};
     this.humanDateFormat={ name: "Date", data: dat.humanDateFormat};
-    this.date={name:"ISO Date",data:dat.date};
+    this.date={name:"ISO Date",data: dat.date};
     this.pop={ name: "Population", data: Number(dat.statePop)};
     this.totalCount={ name: "Total Cases", data: Number(dat.totalCount)};
     this.countPerPop={ name: "Total Cases Per Capita", data: (this.totalCount.data/this.pop.data).toFixed(4)};

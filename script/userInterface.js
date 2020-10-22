@@ -1,4 +1,4 @@
-
+// Determines if the screen width is bigger or smaller than 500px.
     function displayLabels(){
         if(window.screen.width < 500){
             return false;
@@ -8,6 +8,8 @@
     }
 
     currentLabelDisplay=displayLabels();
+
+    // When the window is resized, this checks if we've changed from small to large or vice-versa.  If we did, it renders the chart again.  In the chart, the labels are only rendered when the screen is large as according to the above function.
 
     $(window).resize(function(){
         
@@ -79,6 +81,7 @@ function makeNewChart(){
         }
     });
         $("#chartArea").append(newCanvas);
+        // Creates a note after the chart to explain difference in y-scales.
         let newPara=$("<p>");
         newPara.html("<strong>Note:</strong> Chart graphs cases in hundreds so both deaths and cases are easily visible.  That is, a 1% death rate would show both datasets as equal.")
         $("#chartArea").append(newPara);    
