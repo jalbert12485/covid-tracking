@@ -84,6 +84,7 @@ function storeData(){
     dateLabel.push(COVIDDataSet[i].humanDateFormat);}
     // Displayed the typed data.
     displayData();
-    // Displays the chart.
-    makeNewChart();
+
+    // Call the employment data
+    getEIAData();
 }

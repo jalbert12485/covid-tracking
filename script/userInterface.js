@@ -59,6 +59,18 @@ function makeNewChart(){
     
                 ],
                 borderWidth: 1
+            },{
+                label: 'Employment',
+                data: employment,
+                backgroundColor: [
+                    'rgba(75, 99, 255, 0.2)',
+    
+                ],
+                borderColor: [
+                    'rgba(75, 99, 255, 1)',
+    
+                ],
+                borderWidth: 1
             }]
         },
         options: {
