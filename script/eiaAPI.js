@@ -6,7 +6,8 @@ let APIKey="54eab4c8a1e21e13c9b71bd077147931";
 // We get the current state from the screen, then get the data for that state on yesterday's date and the prior 7 months (8 points total).  This is then saved and displayed on the screen.
 function getEIAData(event){
     let state=currentCity;
-    let url=`http://api.eia.gov/series/?api_key=${APIKey}&${getRegionObj(state).nonfarmEmployment}&start=202003&end=202010`;
+    // let url=`http://api.eia.gov/series/?api_key=${APIKey}&${getRegionObj(state).nonfarmEmployment}&start=202003&end=202010`;PET.EMM_EPM0_PTE_R20_DPG.M=STEO.EE_ENC.
+    let url=`http://api.eia.gov/series/?api_key=${APIKey}&series_id=PET.EMM_EPM0_PTE_R20_DPG.M`;
     let cors="https://cors-anywhere.herokuapp.com/";
 
     var settings = {
@@ -26,14 +27,16 @@ function collateEIAData(response){
     employment=[];
     console.log(response);
     monthlyNumbers=response.series[0].data;
-    for(num of monthlyNumbers){
+    // for(num of monthlyNumbers){
+    for(let i=0;i<=7;i++){
+        let num=monthlyNumbers[i];
         // Emplyment numbers are returned most recent first, so we are using unshift()
         // to fill the array backwards, as it were.
         // Aslo, each num is an array for a date in the first element  and a number in the second
         // we're just ignoring the date, since it's specified in the API call
         // One final note: The numbers are given in millions, but 20 is too small for our chart
         // Let's multiply the numbers by 100, giving us 10,000 jobs for 1.
-        employment.unshift(num[1]*100);
+        employment.unshift(num[1]*5000);
     }
     // Displays the chart.
     makeNewChart();    

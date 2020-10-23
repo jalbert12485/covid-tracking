@@ -60,7 +60,7 @@ function makeNewChart(){
                 ],
                 borderWidth: 1
             },{
-                label: 'Employment',
+                label: 'Gas Prices',
                 data: employment,
                 backgroundColor: [
                     'rgba(75, 99, 255, 0.2)',
