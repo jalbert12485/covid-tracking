@@ -5,7 +5,6 @@ let allData=[];
 // By population, we mean the set of data which should be displayed as the dependent variable in the chart.
 let cases=[];
 let deathCount=[];
-let employment=[];
 // This is the information that will be displayed as the independent variable of the chart.
 let dateLabel=[];
 // Data collected from API, will be converted before being displayed.
@@ -39,7 +38,6 @@ function init(){
     if(currentCity){
         displayCities();
         getData();
-        testEIA();
     }
 }
 
@@ -73,7 +71,7 @@ function getLocal(){
 
 // First check to make sure the input is non-empty and not a repeat.  If this is the case, will create a new local storage point.
 function addCity(){
-    let cityInput=$("#city-input").val().trim().toUpperCase();
+    let cityInput=$("#city-input").val().trim();
     let shouldSave=true;
     // Checks if the user already saved the data.
     for(let i=0; i<cities.length; i++){
