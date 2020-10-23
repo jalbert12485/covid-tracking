@@ -6,8 +6,8 @@ let APIKey="54eab4c8a1e21e13c9b71bd077147931";
 // We get the current state from the screen, then get the data for that state on yesterday's date and the prior 7 months (8 points total).  This is then saved and displayed on the screen.
 function getEIAData(event){
     let state=currentCity;
-    let url=`http://api.eia.gov/series/?api_key=${APIKey}&${getRegionObj(state).nonfarmEmployment}&start=202003&end=202010`;
-    let cors="https://cors-anywhere.herokuapp.com/";
+    let url=`https://api.eia.gov/series/?api_key=${APIKey}&${getRegionObj(state).nonfarmEmployment}&start=202003&end=202010`;
+    let cors="https://cors-anywhere.herokuapp.com/"; 
 
     var settings = {
         "async": true,
