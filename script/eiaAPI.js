@@ -49,7 +49,7 @@ function collateEIAData(response, highestNumber, type){
     else if(type==="fuel") fuel=numbers;
     
     // If we just got the fuel data, we need to get the employment data next
-    if(type==="fuel") getEIAData(highestNumber, "employment");
+    if(type==="fuel" && $("#employment").is(":checked")) getEIAData(highestNumber, "employment");
     else makeNewChart();    
 }
 function getRegionObj(state){
