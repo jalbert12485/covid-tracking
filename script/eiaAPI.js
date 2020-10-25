@@ -39,6 +39,7 @@ function collateEIAData(response){
     makeNewChart();    
 }
 function getRegionObj(state){
+    // The EIA collates non-farm employment data by region, so every state in is one of eight regions
     let usa=[
         {
             name:"pacific",
@@ -83,6 +84,42 @@ function getRegionObj(state){
         {
             name:"south atlantic",
             states:["WV", "VA", "NC", "SC", "GA", "FL", "DE", "MD", "DC"],
+            nonfarmEmployment:"series_id=STEO.EE_SAC.M"
+        }
+    ];
+    let obj;
+    usa.forEach(element => {
+        if(element.states.indexOf(state)!=-1) obj=element;
+    });
+    return obj;
+}
+function getPaddMap(state){
+    // The EIA collates fuel data by PADD region (Petroleum Administration for Defense Distracts), 
+    // so every state in is one of five PADDs
+    let usa=[
+        {
+            name:"west coast",
+            states:["WA", "OR", "CA", "AK", "HI", "NV", "AZ"],
+            nonfarmEmployment:"series_id=STEO.EE_PAC.M"
+        },
+        {
+            name:"rocky mountain",
+            states:["MT", "ID", "WY", "UT", "CO"],
+            nonfarmEmployment:"series_id=STEO.EE_MTN.M"
+        },
+        {
+            name:"midwest",
+            states:["ND", "SD","NE", "KS", "OK", "MN", "IA", "MO", "IL", "WI", "MI", "IN", "OH", "KY", "TN"],
+            nonfarmEmployment:"series_id=STEO.EE_WNC.M"
+        },
+        {
+            name:"gulf coast",
+            states:["NM", "TX", "MS", "AR", "LA", "AL"],
+            nonfarmEmployment:"series_id=STEO.EE_WSC.M"
+        },
+        {
+            name:"east coast",
+            states:["NY", "PA", "NJ", "ME", "NH", "VT", "MA", "RI", "CT", "WV", "VA", "NC", "SC", "GA", "FL", "DE", "MD", "DC"],
             nonfarmEmployment:"series_id=STEO.EE_SAC.M"
         }
     ];
