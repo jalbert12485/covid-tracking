@@ -88,6 +88,8 @@ function storeData(){
     // Displayed the typed data.
     displayData();
     // Call the EIA data
-    getEIAData(highestDeathNumber, "fuel");
+    if($("#fuel").is(":checked")) getEIAData(highestDeathNumber, "fuel");
+    else if($("#employment").is(":checked")) getEIAData(highestDeathNumber, "employment");
+    else makeNewChart();    
     
 }
