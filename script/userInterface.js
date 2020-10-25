@@ -30,13 +30,15 @@ function makeNewChart(){
     // Eventually, they'll be able to use tggles to determine what
     // goes in here, but for now let's put in everything
     let dataToDisplay=[];  
-    dataToDisplay.push({
-        label: '# of Cases (hundreds)',
-        data: cases,
-        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 1)'],
-        borderWidth: 1
-    });
+    
+    if($("#cases").is(":checked"))
+        dataToDisplay.push({
+            label: '# of Cases (hundreds)',
+            data: cases,
+            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+            borderColor: ['rgba(255, 99, 132, 1)'],
+            borderWidth: 1
+        });
     dataToDisplay.push({
             label: '# of Deaths',
             data: deathCount,
@@ -44,20 +46,22 @@ function makeNewChart(){
             borderColor: ['rgba(75, 192, 192, 1)'],
             borderWidth: 1
     });
-    dataToDisplay.push({
-        label: 'Employment',
-        data: employment,
-        backgroundColor: ['rgba(75, 99, 255, 0.2)'],
-        borderColor: ['rgba(75, 99, 255, 1)'],
-        borderWidth: 1
-    });
-    dataToDisplay.push({
-        label: 'Fuel Cost',
-        data: fuel,
-        backgroundColor: ['rgba(75, 99, 87, 0.2)'],
-        borderColor: ['rgba(75, 99, 87, 1)'],
-        borderWidth: 1
-    });
+    if($("#employment").is(":checked"))
+        dataToDisplay.push({
+            label: 'Employment',
+            data: employment,
+            backgroundColor: ['rgba(75, 99, 255, 0.2)'],
+            borderColor: ['rgba(75, 99, 255, 1)'],
+            borderWidth: 1
+        });
+    if($("#fuel").is(":checked"))
+        dataToDisplay.push({
+            label: 'Fuel Cost',
+            data: fuel,
+            backgroundColor: ['rgba(75, 99, 87, 0.2)'],
+            borderColor: ['rgba(75, 99, 87, 1)'],
+            borderWidth: 1
+        });
     // let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(newCanvas, {
         type: 'line',
