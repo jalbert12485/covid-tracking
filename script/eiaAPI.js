@@ -4,9 +4,11 @@ let APIKey="54eab4c8a1e21e13c9b71bd077147931";
 // function testEAI();
 
 // We get the current state from the screen, then get the data for that state on yesterday's date and the prior 7 months (8 points total).  This is then saved and displayed on the screen.
-function getEIAData(event){
+function getEIAData(event, type="fuel"){
     let state=currentCity;
-    let url=`https://api.eia.gov/series/?api_key=${APIKey}&${getRegionObj(state).nonfarmEmployment}&start=202003&end=202010`;
+    let url=`https://api.eia.gov/series/?api_key=${APIKey}&${getRegionObj(state).nonfarmEmployment}&start=202003&end=202010`; 
+    if(type==="fuel")
+        url=`https://api.eia.gov/series/?api_key=${APIKey}&series_id=PET.EMM_EPM0_PTE_SFL_DPG.M`;
     let cors="https://cors-anywhere.herokuapp.com/"; 
 
     var settings = {

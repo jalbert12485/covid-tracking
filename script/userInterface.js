@@ -22,8 +22,6 @@
 
 // Make a new chart
 function makeNewChart(){
-
-
     $("#chartArea").empty();
     let newCanvas=$("<canvas>");
     newCanvas.attr("id","myChart");

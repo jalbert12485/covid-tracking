@@ -39,7 +39,7 @@ function init(){
     if(currentCity){
         displayCities();
         getData();
-        testEIA();
+        getEIAData();
     }
 }
 
