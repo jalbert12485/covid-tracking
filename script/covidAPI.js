@@ -1,5 +1,5 @@
 // We get the current state from the screen, then get the data for that state on yesterday's date and the prior 7 months (8 points total).  This is then saved and displayed on the screen.
-function getData(event){
+function getCovidData(event){
     COVIDDataSet=[];
     // Takes user input in order to search for the input state.
     let state=currentCity;
@@ -42,8 +42,8 @@ function collateCovidData(response){
     
     // When the loop is finished, will sort, store and display data.
     if(COVIDDataSet.length==datapoints){
-    sortData();
-    storeData();
+        sortData();
+        storeData();
     }
 }
 
@@ -64,27 +64,30 @@ function storeData(){
     cases=[];
     deathCount=[];
     dateLabel=[];
+    let highestDeathNumber=0;
     for(let i=0; i< COVIDDataSet.length; i++){
         // For all entries in COVID Data, we format it with the Data constructor.
-    const newConstData=new Data(COVIDDataSet[i]);
-    allData.push(newConstData);
-    // If there is no data from API (or it is null), stores the value 0 instead (since these are cases and deaths a null return means there were no cases).
-    if(!COVIDDataSet[i].totalCount){
-        cases.push(0);
-    }else{
-        // If there is a value, we send the value of counts (divided by 100) to be displayed.
-    cases.push(Number(COVIDDataSet[i].totalCount)/100);
+        const newConstData=new Data(COVIDDataSet[i]);
+        allData.push(newConstData);
+        // If there is no data from API (or it is null), stores the value 0 instead (since these are cases and deaths a null return means there were no cases).
+        if(!COVIDDataSet[i].totalCount){
+            cases.push(0);
+        }else{
+            // If there is a value, we send the value of counts (divided by 100) to be displayed.
+            cases.push(Number(COVIDDataSet[i].totalCount)/100);
+        }
+        // Deaths follows same pattern as cases, except we don't divide by 100.  This is meant to make both graphs visible.
+        if(!COVIDDataSet[i].death){
+            deathCount.push(0);            
+        }else{
+            deathCount.push(COVIDDataSet[i].death);
+            if(COVIDDataSet[i].death>highestDeathNumber)highestDeathNumber=COVIDDataSet[i].death;
+        }
+        dateLabel.push(COVIDDataSet[i].humanDateFormat);
     }
-    // Deaths follows same pattern as cases, except we don't divide by 100.  This is meant to make both graphs visible.
-    if(!COVIDDataSet[i].death){
-        deathCount.push(0); 
-    }else{
-    deathCount.push(COVIDDataSet[i].death);
-    }
-    dateLabel.push(COVIDDataSet[i].humanDateFormat);}
     // Displayed the typed data.
     displayData();
-
-    // Call the employment data
-    getEIAData();
+    // Call the EIA data
+    getEIAData(highestDeathNumber, "fuel");
+    
 }
