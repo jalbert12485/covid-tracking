@@ -52,14 +52,23 @@
 
         <!-- Display portion -->
         <main class="col-md-8 col-sm-12 bg-white" id="main-display">
-            <!-- Current Info -->
-            <section class="row border m-1">
-                <div class="col-lg-4 col-md-12" id="stats">
-
+            <div class="row">
+                <!-- Current Info -->
+                <section class="row border m-1">
+                    <div class="col-lg-4 col-md-12" id="stats">
+    
+                    </div>
+                    <div class="col-lg-8 col-md-12" id="chartArea"></div>
+                </section>
+            </div>
+            <div class="row">
+                <div class="col-12 border">
+                   <h4>Data to display</h4>
+                   <input type="checkbox" class="dataCheck" id="fuel" value="fuel" checked><label for="fuel">Fuel Costs</label>
+                   <input type="checkbox" class="dataCheck" id="employment" value="employment" checked><label for="employment">Non-Farm Employment</label>
+                   <input type="checkbox" class="dataCheck" id="cases" value="cases" checked><label for="cases">COVID Cases</label>
                 </div>
-                <div class="col-lg-8 col-md-12" id="chartArea"></div>
-            </section>
-
+            </div>
         </main>
 
         <!-- content box end -->
