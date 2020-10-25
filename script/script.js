@@ -60,6 +60,8 @@ $("body").on("click",".city",function(e){
     currentCity=cities[this.dataset.city];
     getCovidData();
 });    
+// If the user changes any of the checkboxes, update the graph again
+$(".dataCheck").change(getCovidData);
 
 // Updates the local storage to be the current states.
 function saveToLocal(){
