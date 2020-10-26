@@ -22,56 +22,52 @@
 
 // Make a new chart
 function makeNewChart(){
-
-
     $("#chartArea").empty();
     let newCanvas=$("<canvas>");
     newCanvas.attr("id","myChart");
-    newCanvas.attr("style","width: 400 height:200");       
-
+    newCanvas.attr("style","width: 400 height:200");     
+    // Make an array with whatever we want to show the user
+    // Eventually, they'll be able to use tggles to determine what
+    // goes in here, but for now let's put in everything
+    let dataToDisplay=[];  
+    
+    if($("#cases").is(":checked"))
+        dataToDisplay.push({
+            label: '# of Cases (hundreds)',
+            data: cases,
+            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+            borderColor: ['rgba(255, 99, 132, 1)'],
+            borderWidth: 1
+        });
+    dataToDisplay.push({
+            label: '# of Deaths',
+            data: deathCount,
+            backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+            borderColor: ['rgba(75, 192, 192, 1)'],
+            borderWidth: 1
+    });
+    if($("#employment").is(":checked"))
+        dataToDisplay.push({
+            label: 'Employment',
+            data: employment,
+            backgroundColor: ['rgba(75, 99, 255, 0.2)'],
+            borderColor: ['rgba(75, 99, 255, 1)'],
+            borderWidth: 1
+        });
+    if($("#fuel").is(":checked"))
+        dataToDisplay.push({
+            label: 'Fuel Cost',
+            data: fuel,
+            backgroundColor: ['rgba(75, 99, 87, 0.2)'],
+            borderColor: ['rgba(75, 99, 87, 1)'],
+            borderWidth: 1
+        });
     // let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(newCanvas, {
-
         type: 'line',
         data: {
             labels: dateLabel,
-            datasets: [{
-                label: '# of Cases (hundreds)',
-                data: cases,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-    
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-    
-                ],
-                borderWidth: 1
-            },{
-                label: '# of Deaths',
-                data: deathCount,
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-    
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-    
-                ],
-                borderWidth: 1
-            },{
-                label: 'Employment',
-                data: employment,
-                backgroundColor: [
-                    'rgba(75, 99, 255, 0.2)',
-    
-                ],
-                borderColor: [
-                    'rgba(75, 99, 255, 1)',
-    
-                ],
-                borderWidth: 1
-            }]
+            datasets: dataToDisplay
         },
         options: {
             legend: {
@@ -92,6 +88,7 @@ function makeNewChart(){
             }
         }
     });
+
         $("#chartArea").append(newCanvas);
         // Creates a note after the chart to explain difference in y-scales.
         let newPara=$("<p>");

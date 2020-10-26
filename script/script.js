@@ -6,6 +6,7 @@ let allData=[];
 let cases=[];
 let deathCount=[];
 let employment=[];
+let fuel=[];
 // This is the information that will be displayed as the independent variable of the chart.
 let dateLabel=[];
 // Data collected from API, will be converted before being displayed.
@@ -38,8 +39,7 @@ function init(){
     // If we have any previously saved data, we should search the last saved state and display the information.
     if(currentCity){
         displayCities();
-        getData();
-        testEIA();
+        getCovidData();
     }
 }
 
@@ -58,8 +58,10 @@ $("body").on("click",".close",function(){
 $("body").on("click",".city",function(e){
     e.preventDefault();
     currentCity=cities[this.dataset.city];
-    getData();
+    getCovidData();
 });    
+// If the user changes any of the checkboxes, update the graph again
+$(".dataCheck").change(getCovidData);
 
 // Updates the local storage to be the current states.
 function saveToLocal(){
@@ -94,7 +96,7 @@ function addCity(){
         currentCity=cityInput;
         saveToLocal();
         displayCities();
-        getData();
+        getCovidData();
     }else{
         // If the input was not valid, let's the user know.
         $("#input-error").attr("style","display: block");
